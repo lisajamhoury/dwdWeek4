@@ -1,0 +1,53 @@
+<!-- load the jquery library. jquery is a javascript library that is essentially shorthand for js
+when you see the $ in javascript, that means you're working with jquery -->
+
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
+<!-- Here's a button. 
+When you click it, it runs the "getTemp" function -->
+Click my button
+<button type="button" onclick="getTemp()">Click Me!</button><br>
+
+<!-- This is just a text area that changes with javascript... see below  -->
+Here's my result:
+<span id="result"></span>
+
+<!-- This script tag means I'm including javascript in my html.
+This is where I'm storing my getTemp function
+When someone hits my button, it makes an ajax call to the open weather map api
+The $$$ means that we're using jquery
+We could do this with "vanilla javascript" but jquery makes it all a lot quicker/easier -->
+
+<script type="text/javascript">
+
+// Here's my function that runs when the button is clicked
+function getTemp() {
+
+  // I'm just logging here to make sure my code is running when I think it should
+  console.log('Getting temp');
+  
+  // This line that is commented out is what I would use if I wanted the code below to run once the page loaded
+  //$(document).ready(function(){
+
+    // All of this stuff is sent to open weather map, including the two functions for "success" and "error" or failure
+
+    $.ajax({
+      url: "http://api.openweathermap.org/data/2.5/weather?id=5128581&units=imperial&APPID=90051f65edc86dcffa5f4cdf9dbff9f7",
+      dataType: 'json',
+      success: function(data) {
+        console.log("success", data.main.temp);
+        //alert("Temperature is: " + data.main.temp );
+
+        // This displays the weather result if there is one.
+        document.getElementById("result").innerHTML = data.main.temp;
+      },
+      error: function() {
+
+        // This opens an error window if there's an error
+        alert("error");
+        
+      }
+    });        
+  };
+</script>
+  
